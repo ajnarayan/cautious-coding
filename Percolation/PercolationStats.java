@@ -20,7 +20,7 @@ public class PercolationStats{
         
        double[] thresholdValues = new double[trials];
         int i=0;
-        while(i<trials){
+        while(i<trials-1){
          //Initialize all sites to be blocked.   
         Percolation p = new Percolation(n);
         //Repeat the following until the system percolates:
@@ -64,8 +64,8 @@ public class PercolationStats{
     
     public static void main(String[] args)   { // test client (described below)
         int n = Integer.parseInt(args[0]);
-        int T = Integer.parseInt(args[1]);
-        PercolationStats ps = new PercolationStats(n,T);
+        int trials = Integer.parseInt(args[1]);
+        PercolationStats ps = new PercolationStats(n,trials);
         
         System.out.println("mean = "+ ps.mean());
         System.out.println("stddev = "+ ps.stddev());

@@ -11,7 +11,7 @@ public class Percolation{
     
    
     public Percolation(int n){
-    wUnionFind = new WeightedQuickUnionUF(n*n);  
+    wUnionFind = new WeightedQuickUnionUF(n*n+2);  
     //grid is blocked initially with all values as False.
     grid = new boolean[n][n];
     sizeOfGrid = n;
@@ -19,11 +19,22 @@ public class Percolation{
 
     public void open(int row, int col) { 
         // open site (row, col) if it is not open already
-        if (!grid[row-1][col-1]){
             grid[row-1][col-1] = true;
-        }
         //need to link it to neighbors too!! 
-        
+            int convertedIndex = xyTo1D(row,col);
+        if (row == 1 ) //if it is the second row
+            wUnionFind.union(convertedIndex, 0);
+        if (row == sizeOfGrid ) //if it is the last but one
+            wUnionFind.union(convertedIndex, sizeOfGrid * sizeOfGrid + 1);
+        //neighbors need to be connected 
+        if ( col > 1 && isOpen(row, col-1)) 
+            wUnionFind.union(xyTo1D(row,col), xyTo1D(row,col-1));
+        if ( row > 1 && isOpen(row-1, col)) 
+            wUnionFind.union(xyTo1D(row,col), xyTo1D(row-1,col));
+        if ( col < sizeOfGrid && isOpen(row, col+1)) 
+            wUnionFind.union(xyTo1D(row,col), xyTo1D(row,col+1));
+        if ( row < sizeOfGrid && isOpen(row+1, col)) 
+            wUnionFind.union(xyTo1D(row,col), xyTo1D(row+1,col));
     }
     public boolean isOpen(int row, int col) { // is site (row, col) open?
         return grid[row-1][col-1];
@@ -56,7 +67,7 @@ public class Percolation{
        
     public boolean percolates()      {        // does the system percolate?
         //if it is connected from top to bottom, it percolates:
-       return wUnionFind.connected(0,sizeOfGrid*sizeOfGrid+1);
+       return wUnionFind.connected(0, sizeOfGrid*sizeOfGrid+1 );
     }
     
     
