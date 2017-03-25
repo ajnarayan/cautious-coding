@@ -13,12 +13,14 @@ public class PercolationStats{
     private double stddev;
     private double minConfidence;
     private double maxConfidence;
+     private double[] thresholdValues;
+     private int t;
     
     public PercolationStats(int n, int trials) {   // perform trials independent experiments on an n-by-n grid
 //   The constructor should throw a java.lang.IllegalArgumentException if either n ≤ 0 or trials ≤ 0.
         if (n <= 0 || trials <= 0) throw new java.lang.IllegalArgumentException("No. of experiemts/gridsize should be greater than 0");
-        
-       double[] thresholdValues = new double[trials];
+        t = trials;
+       thresholdValues = new double[trials];
         int i=0;
         while(i<trials-1){
          //Initialize all sites to be blocked.   
@@ -30,36 +32,33 @@ public class PercolationStats{
             int row = 1 + StdRandom.uniform(n);
             int col = 1 + StdRandom.uniform(n);
            //Open the site
-            p.open(row,col);
-            openSites++;
+            if(!p.isOpen(row,col)){
+                p.open(row,col);
+                openSites++;
+            }
         }
         i++;
-       thresholdValues[i] = openSites / (n*n);
+       thresholdValues[i] = (double) openSites / (n*n);
         }//end of trial
  
-        //Calculations: 
-        //By repeating this computation experiment T times and averaging the results, we obtain a more accurate estimate of the percolation threshold
-        mean = StdStats.mean(thresholdValues);
-        //the sample standard deviation s; measures the sharpness of the threshold
-        stddev = StdStats.stddev(thresholdValues);
-        minConfidence = mean - ((1.96 * stddev)/Math.sqrt(trials) );
-        maxConfidence = mean + ((1.96 * stddev)/Math.sqrt(trials) );
     }
  
     public double mean() {  // sample mean of percolation threshold
-     return mean;   
+     //By repeating this computation experiment T times and averaging the results, we obtain a more accurate estimate of the percolation threshold
+        return StdStats.mean(thresholdValues);   
     }
     
     public double stddev()  {   // sample standard deviation of percolation threshold
-        return stddev;   
+        //the sample standard deviation s; measures the sharpness of the threshold
+        return StdStats.stddev(thresholdValues);  
     }
     
     public double confidenceLo()    {  // low  endpoint of 95% confidence interval
-        return minConfidence;
+        return mean() - ((1.96 * stddev())/Math.sqrt(t) );
     }
     
     public double confidenceHi()   {   // high endpoint of 95% confidence interval
-        return maxConfidence;
+        return mean() + ((1.96 * stddev())/Math.sqrt(t) );
     } 
     
     public static void main(String[] args)   { // test client (described below)
