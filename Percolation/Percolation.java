@@ -9,8 +9,7 @@ public class Percolation{
     private final boolean[][] grid;
     private int sizeOfGrid;
     
-    
-    
+   
     public Percolation(int n){
     wUnionFind = new WeightedQuickUnionUF(n*n);  
     //grid is blocked initially with all values as False.
@@ -59,15 +58,18 @@ public class Percolation{
         //if it is connected from top to bottom, it percolates:
        return wUnionFind.connected(0,sizeOfGrid*sizeOfGrid+1);
     }
+    
+    
     public static void main(String[] args) {  // test client (optional)
         Percolation p = new Percolation(2);
         System.out.println(Arrays.deepToString(p.grid));
-        p.open(1,1);
-        p.open(2,1);
+       p.open(1,1);
+       p.open(2,1);
         System.out.println(Arrays.deepToString(p.grid));
-        System.out.println(p.isOpen(1,1));
+       System.out.println(p.isOpen(1,1));
         System.out.println(p.isFull(2,1));
     }
+    
     }
 
 
