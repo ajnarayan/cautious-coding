@@ -9,35 +9,33 @@ import edu.princeton.cs.algs4.StdStats;
  */
 
 public class PercolationStats{
-    private double mean; 
-    private double stddev;
-    private double minConfidence;
-    private double maxConfidence;
-     private double[] thresholdValues;
+    private double[] thresholdValues;
      private int t;
     
     public PercolationStats(int n, int trials) {   // perform trials independent experiments on an n-by-n grid
 //   The constructor should throw a java.lang.IllegalArgumentException if either n ≤ 0 or trials ≤ 0.
         if (n <= 0 || trials <= 0) throw new java.lang.IllegalArgumentException("No. of experiemts/gridsize should be greater than 0");
         t = trials;
-       thresholdValues = new double[trials];
-        int i=0;
-        while(i<trials-1){
+       thresholdValues = new double[t];
+
+        for(int i=0; i<t; i++){
          //Initialize all sites to be blocked.   
         Percolation p = new Percolation(n);
         //Repeat the following until the system percolates:
         int openSites = 0;
         while(!p.percolates()){
             //Choose a site uniformly at random among all blocked sites.
-            int row = 1 + StdRandom.uniform(n);
-            int col = 1 + StdRandom.uniform(n);
+           int row, col;
+             row = 1 + StdRandom.uniform(n);
+             col = 1 + StdRandom.uniform(n);
+             while(p.isOpen(row,col)){
+             row = 1 + StdRandom.uniform(n);
+             col = 1 + StdRandom.uniform(n);
+             }
            //Open the site
-            if(!p.isOpen(row,col)){
                 p.open(row,col);
                 openSites++;
-            }
         }
-        i++;
        thresholdValues[i] = (double) openSites / (n*n);
         }//end of trial
  
@@ -61,14 +59,14 @@ public class PercolationStats{
         return mean() + ((1.96 * stddev())/Math.sqrt(t) );
     } 
     
-    public static void main(String[] args)   { // test client (described below)
+   public static void main(String[] args)   { // test client (described below)
         int n = Integer.parseInt(args[0]);
         int trials = Integer.parseInt(args[1]);
-        PercolationStats ps = new PercolationStats(n,trials);
+       PercolationStats ps = new PercolationStats(n,trials);
         
         System.out.println("mean = "+ ps.mean());
         System.out.println("stddev = "+ ps.stddev());
-        System.out.println("95% confidence interval = ["+ps.confidenceLo()+","+ps.confidenceHi()+"]");
-   }
+       System.out.println("95% confidence interval = ["+ps.confidenceLo()+","+ps.confidenceHi()+"]");
+  }
  
 }
