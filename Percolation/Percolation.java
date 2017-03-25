@@ -69,7 +69,6 @@ public class Percolation{
        System.out.println(p.isOpen(1,1));
         System.out.println(p.isFull(2,1));
     }
-    
     }
 
 
