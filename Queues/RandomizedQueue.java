@@ -1,8 +1,13 @@
 import java.util.Iterator;
-
+import java.util.NoSuchElementException;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
-//   public RandomizedQueue()                 // construct an empty randomized queue
+    private Item[] que;
+    private int size;
+    
+    public RandomizedQueue()  {               // construct an empty randomized queue    
+        
+    }
 //   public boolean isEmpty()                 // is the queue empty?
 //   public int size()                        // return the number of items on the queue
 //   public void enqueue(Item item)           // add the item
