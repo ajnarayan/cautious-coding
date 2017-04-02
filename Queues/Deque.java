@@ -121,5 +121,7 @@ public class Deque<Item> implements Iterable<Item> {
         public Iterator<Item> iterator(){         // return an iterator over items in order from front to end
         return this.new DequeIteratior();
     }
-//   public static void main(String[] args)   // unit testing (optional)
+        public static void main(String[] args) {  // unit testing (optional)
+            
+        }
 }
