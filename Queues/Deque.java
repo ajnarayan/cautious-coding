@@ -6,7 +6,7 @@ public class Deque<Item> implements Iterable<Item> {
     private Node front, rear; 
     private int sizeOfQue;
     
-    public void Deque(){
+    public Deque(){
         this.sizeOfQue = 0;   
     }
     
@@ -14,82 +14,89 @@ public class Deque<Item> implements Iterable<Item> {
         private Item data;
         private Node next; 
         
-        Node (Item item){
-            this.data = item;
+        Node (Item data){
+            this.data = data;
             this.next = null;
         }
-    }
-    
-    
-    public Deque()    {
-        // construct an empty deque  
     }
     
     public boolean isEmpty()       {          // is the deque empty?
         return sizeOfQue == 0;
     }
     
-    public int size(){                        // return the number of items on the deque
+    public int size(){                        // return the number of datas on the deque
         return sizeOfQue;
     }
     
     
-    public void addFirst(Item item)  {        // add the item to the front
-        if (item == null){
+    public void addFirst(Item data)  {        // add the data to the front
+        if (data == null){
             throw new NullPointerException();
         }
         if (isEmpty()){
-         front = new Node(item); 
+         front = new Node(data); 
          sizeOfQue++;
         }
         else{
          Node temp = front;
-         front = new Node(item);
+         front = new Node(data);
          front.next = temp;
             sizeOfQue++;
         } 
     }
-    public void addLast(Item item)   {        // add the item to the end
+    public void addLast(Item data)   {        // add the data to the end
         
-        if (item == null){
+        if (data == null){
             throw new NullPointerException();
         }
         if (isEmpty()){
-         front = new Node(item); 
+         front = new Node(data); 
          rear = front;
          sizeOfQue++;
         }
         else{
-          Node temp = new Node(item); 
+          Node temp = new Node(data); 
           rear.next = temp;
           rear = temp; 
           sizeOfQue++;
         }
     }
     
-    public Item removeFirst()      {          // remove and return the item from the front
+    public Item removeFirst()      {          // remove and return the data from the front
         Item i = front.data;
         if (isEmpty()){
             throw new NoSuchElementException();
         }
         else{
+            if(sizeOfQue > 1) {
             front = front.next;
-            sizeOfQue--;
-            return i;
+            }
+            else{
+             front = null;
+             rear = null;
+            }
         }
+        sizeOfQue--;
+    return i;
     }
-    public Item removeLast()     {            // remove and return the item from the end
+    public Item removeLast()     {            // remove and return the data from the end
         Item i = rear.data;
         if(isEmpty()){
             throw new NoSuchElementException(); 
         }
         else{
+            if (sizeOfQue < 1){
+            front = null;
+            rear = null;
+            }
+            else{
             Node temp = front;
             while(temp.next != rear){
             temp = temp.next;
             }
             rear = temp;
             rear.next = null;
+            }
             sizeOfQue--;
             return i;
         }
@@ -118,7 +125,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
     }
    
-        public Iterator<Item> iterator(){         // return an iterator over items in order from front to end
+        public Iterator<Item> iterator(){         // return an iterator over datas in order from front to end
         return this.new DequeIteratior();
     }
         public static void main(String[] args) {  // unit testing (optional)

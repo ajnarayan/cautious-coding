@@ -17,7 +17,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         return size;
     }
     
-    public void resize(int newlength){
+    private void resize(int newlength){
         //increase the length of array to 2 times when it reaches the end 
         Item[] temp = (Item[]) new Object[newlength];
         //copy contents:
