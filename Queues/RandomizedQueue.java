@@ -8,7 +8,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     
     public RandomizedQueue()  {               // construct an empty randomized queue    
         // we create an array of objects and then we cast it down to an array of items
-        this.que = (Item[]) new Object[1];
+        que = (Item[]) new Object[2];
     }
     public boolean isEmpty(){                 // is the queue empty?
         return size == 0 ; 
@@ -19,16 +19,18 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     
     private void resize(int newlength){
         //increase the length of array to 2 times when it reaches the end 
+        if (newlength > size){
         Item[] temp = (Item[]) new Object[newlength];
         //copy contents:
         for (int i=0; i < size; i++) 
             temp[i] = que[i];
         que = temp;
+        }
     }
     
     public void enqueue(Item item) {          // add the item
-        if (isEmpty()){   
-            throw new NoSuchElementException();
+        if (item == null){
+            throw new NullPointerException();
         }
         else{
             if(size == que.length) 
@@ -46,6 +48,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         Item temp = que[index];
         //put the last element in the removed elements place
         que[index] = que[size-1];
+        que[size-1] = null;
         size--;
         //need to shrink the array        
         //The efficient solution is to wait until the array gets one quarter full before you have it
@@ -62,7 +65,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         return que[index];
     }
     public Iterator<Item> iterator()   {      // return an independent iterator over items in random order
-return this.new RandomizedQueueIterator();
+        return new RandomizedQueueIterator();
     }
     
     private class RandomizedQueueIterator implements Iterator<Item>{
@@ -90,8 +93,7 @@ return this.new RandomizedQueueIterator();
             else
                 return i[n++];
     }
-        
-        
+   
     }
     public static void main(String[] args) {  // unit testing (optional)
         
