@@ -8,7 +8,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     
     public RandomizedQueue()  {               // construct an empty randomized queue    
         // we create an array of objects and then we cast it down to an array of items
-        que = (Item[]) new Object[2];
+        que = (Item[]) new Object[1];
+        size = 0;
     }
     public boolean isEmpty(){                 // is the queue empty?
         return size == 0 ; 
@@ -20,11 +21,11 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     private void resize(int newlength){
         //increase the length of array to 2 times when it reaches the end 
         if (newlength > size){
-        Item[] temp = (Item[]) new Object[newlength];
-        //copy contents:
-        for (int i=0; i < size; i++) 
-            temp[i] = que[i];
-        que = temp;
+            Item[] temp = (Item[]) new Object[newlength];
+            //copy contents:
+            for (int i=0; i < size; i++) 
+                temp[i] = que[i];
+            que = temp;
         }
     }
     
@@ -79,12 +80,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
                 i[k] = que[k];
         }
         
-         public boolean hasNext(){
-          return n < size;  
+        public boolean hasNext(){
+            return n < size;  
         }
         
         public void remove(){
-        throw new UnsupportedOperationException();
+            throw new UnsupportedOperationException();
         }
         
         public Item next(){
@@ -92,8 +93,8 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
                 throw new NoSuchElementException();
             else
                 return i[n++];
-    }
-   
+        }
+        
     }
     public static void main(String[] args) {  // unit testing (optional)
         

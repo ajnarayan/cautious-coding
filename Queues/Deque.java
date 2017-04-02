@@ -71,13 +71,13 @@ public class Deque<Item> implements Iterable<Item> {
             throw new NoSuchElementException();
         }
         else{
-            if(sizeOfQue > 1) {
-                front = front.next;
-                front.prev = null;
-            }
-            else{
+            if(sizeOfQue == 1) {
                 front = null;
                 rear = null;
+            }
+            else{
+                front = front.next;
+                front.prev = null;
             }
         }
         sizeOfQue--;
@@ -90,7 +90,7 @@ public class Deque<Item> implements Iterable<Item> {
             throw new NoSuchElementException(); 
         }
         else{
-            if (sizeOfQue < 1){
+            if (sizeOfQue == 1){
                 front = null;
                 rear = null;
             }
@@ -107,7 +107,7 @@ public class Deque<Item> implements Iterable<Item> {
         return new DequeIteratior();
     }
     
-      private class DequeIteratior implements Iterator<Item>{
+    private class DequeIteratior implements Iterator<Item>{
         private Node current = front;
         
         public boolean hasNext(){
@@ -129,8 +129,6 @@ public class Deque<Item> implements Iterable<Item> {
             }
         }
     }
-    
-    
     
     public static void main(String[] args) {  // unit testing (optional)
         
