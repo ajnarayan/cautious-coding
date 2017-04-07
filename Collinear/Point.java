@@ -13,19 +13,53 @@
  * and only if the slope (y1 − y0) / (x1 − x0) is less than the slope (y2 − y0) / (x2 − x0). Treat horizontal, vertical, 
  * and degenerate line segments as in the slopeTo() method.
  */
-
-
-
-
+import java.util.Comparator;
+import edu.princeton.cs.algs4.StdDraw;
 
 public class Point implements Comparable<Point> {
-    public Point(int x, int y)                         // constructs the point (x, y)
+    private final int x;     // x-coordinate of this point
+    private final int y;     // y-coordinate of this point
+    
+    public Point(int x, int y) {                          // constructs the point (x, y)
+        this.x = x;
+        this.y = y;
         
-        public   void draw()                               // draws this point
-        public   void drawTo(Point that)                   // draws the line segment from this point to that point
-        public String toString()                           // string representation
+    }
+    public   void draw()   {                            // draws this point
+        StdDraw.point(x, y);
+    }
+    
+    public   void drawTo(Point that)   {                // draws the line segment from this point to that point
+        StdDraw.line(this.x, this.y, that.x, that.y);    
+    }
+    public String toString() {                          // string representation
+        return "(" + x + ", " + y + ")";   
         
-        public int compareTo(Point that)     // compare two points by y-coordinates, breaking ties by x-coordinates
-        public double slopeTo(Point that)       // the slope between this point and that point
-        public Comparator<Point> slopeOrder()              // compare two points by slopes they make with this point
+    }
+    public int compareTo(Point that) {    // compare two points by y-coordinates, breaking ties by x-coordinates
+        if (that.y < this.y || (that.y == this.y && that.x<this.x))
+            return that.y;
+        else
+            return this.y; 
+    }
+    public double slopeTo(Point that)  {     // the slope between this point and that point
+        return (this.y -that.y)/(double)(this.x-that.x);
+    }
+    public Comparator<Point> slopeOrder()   {           // compare two points by slopes they make with this point
+        
+        eturn new Comparator<Point>() {
+        @Override
+        public int compare(Point a, Point b){
+            double slopea = slopeTo(a);
+            double slopeb = slopeTo(b);
+            if (slopea < slopeb)
+                return 1;
+            else 
+                return 0; 
+        }
+        };        
+    }
+        public static void main(String[] args) {
+        /* YOUR CODE HERE */
+    }
 }
