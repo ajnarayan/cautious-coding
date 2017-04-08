@@ -9,7 +9,7 @@ public class BruteCollinearPoints {
         Point[] temp = points.clone();
         
         for(int i = 0 ; i<temp.length; i++)
-            for (j = i+1 ; j<temp.length; j++){
+            for (int j = i+1 ; j<temp.length; j++){
             if (temp[i] == null)
                 throw new NullPointerException();
             if (temp[i].compareTo(temp[j]) == 0 )
@@ -21,16 +21,14 @@ public class BruteCollinearPoints {
         //If 4 points appear on a line segment in the order p→q→r→s, then you should include either the line segment p→s or s→p (but not both)
         //and you should not include subsegments such as p→r or q→r. For simplicity, we will not supply any input to BruteCollinearPoints that has 5 
         //or more collinear points.
-        for(p = 0; p< temp.length-3, p++)
-            for(q=p+1 ; q<temp.length-2; q++)
-             for(r = q+1; r<temp.length-1; r++)
-               for( s = r+1 ; s< temp.length; s++){
-                   //either p->s or s->p
-                    if( temp[p].slopeTo(temp[q]) == temp[p].slopeTo(temp[r]) && temp[p].slopeTo(temp[q]) == temp[p].slopeTo(temp[s])
-                           line.add(new LineSegment(temp[p], temp[s]);
-        }
-        
-        
+        for(int p = 0; p< temp.length-3; p++)
+            for(int q=p+1 ; q<temp.length-2; q++)
+             for(int r = q+1; r<temp.length-1; r++)
+               for(int  s = r+1 ; s< temp.length; s++){
+                    if( temp[p].slopeTo(temp[q]) == temp[p].slopeTo(temp[r]) && temp[p].slopeTo(temp[q]) == temp[p].slopeTo(temp[s]))
+                           //either p->s or s->p
+                           line.add(new LineSegment(temp[p], temp[s]));
+        }   
     }
     
     
@@ -40,7 +38,7 @@ public class BruteCollinearPoints {
         
     }
     public LineSegment[] segments()    {            // the line segments
-        return line.toArray(new lineSegment[line.size()]);    
+        return line.toArray(new LineSegment[line.size()]);    
         
     }
     

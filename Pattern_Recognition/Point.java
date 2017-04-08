@@ -44,17 +44,23 @@ public class Point implements Comparable<Point> {
     public double slopeTo(Point that)  {     // the slope between this point and that point
         return (this.y -that.y)/(double)(this.x-that.x);
     }
+   
+    //https://stackoverflow.com/questions/22499999/public-final-comparatorpoint-slope-order
     public Comparator<Point> slopeOrder()   {           // compare two points by slopes they make with this point
+     return new comp();   
         
-        return new Comparator<Point>() {
+    }
+        
+   
+    
+    private class comp implements Comparator<Point> {
         @Override
-        public double compare(Point a, Point b){
+        public int compare(Point a, Point b){
             double slopea = slopeTo(a);
             double slopeb = slopeTo(b);
             return Double.compare(slopea, slopeb); 
         }
-        };        
-    }
+        }        
         public static void main(String[] args) {
         /* YOUR CODE HERE */
     }
