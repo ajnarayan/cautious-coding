@@ -23,7 +23,6 @@ public class Point implements Comparable<Point> {
     public Point(int x, int y) {                          // constructs the point (x, y)
         this.x = x;
         this.y = y;
-        
     }
     public   void draw()   {                            // draws this point
         StdDraw.point(x, y);
@@ -49,13 +48,10 @@ public class Point implements Comparable<Point> {
         
         eturn new Comparator<Point>() {
         @Override
-        public int compare(Point a, Point b){
+        public double compare(Point a, Point b){
             double slopea = slopeTo(a);
             double slopeb = slopeTo(b);
-            if (slopea < slopeb)
-                return 1;
-            else 
-                return 0; 
+            return Double.compare(slopea, slopeb); 
         }
         };        
     }
