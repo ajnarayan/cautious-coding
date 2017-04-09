@@ -3,11 +3,11 @@ import java.util.Arrays;
 
 public class BruteCollinearPoints {
     
-    public ArrayList<LineSegment> line = new ArrayList<>();
+    private ArrayList<LineSegment> line = new ArrayList<>();
     
     public BruteCollinearPoints(Point[] points) {   // finds all line segments containing 4 points
         Point[] temp = points.clone();
-        
+        Arrays.sort(temp);
         for(int i = 0 ; i<temp.length; i++)
             for (int j = i+1 ; j<temp.length; j++){
             if (temp[i] == null)
@@ -15,8 +15,7 @@ public class BruteCollinearPoints {
             if (temp[i].compareTo(temp[j]) == 0 )
                 throw new IllegalArgumentException("Duplicates found");
         }
-        
-        Arrays.sort(temp);
+       
         //The method segments() should include each line segment containing 4 points exactly once. 
         //If 4 points appear on a line segment in the order p→q→r→s, then you should include either the line segment p→s or s→p (but not both)
         //and you should not include subsegments such as p→r or q→r. For simplicity, we will not supply any input to BruteCollinearPoints that has 5 
@@ -30,9 +29,7 @@ public class BruteCollinearPoints {
                            line.add(new LineSegment(temp[p], temp[s]));
         }   
     }
-    
-    
-    
+
     public int numberOfSegments()  {      // the number of line segments
         return line.size();   
         

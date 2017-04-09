@@ -36,31 +36,38 @@ public class Point implements Comparable<Point> {
         
     }
     public int compareTo(Point that) {    // compare two points by y-coordinates, breaking ties by x-coordinates
-        if (that.y < this.y || (that.y == this.y && that.x<this.x))
-            return that.y;
-        else
-            return this.y; 
+        if (that == null) {
+            throw new NullPointerException();
+        }
+        
+        if (this.y < that.y || (that.y == this.y && this.x<that.x))
+            return -1;
+        
+            return 0; 
     }
     public double slopeTo(Point that)  {     // the slope between this point and that point
-        return (this.y -that.y)/(double)(this.x-that.x);
+        if (that.x == this.x && that.y == this.y)
+            return Double.NEGATIVE_INFINITY;
+        if (that.y-this.y == 0.0)
+            return 0.0; 
+        if (that.x-this.x == 0.0)
+            return  Double.POSITIVE_INFINITY;
+        
+        return (that.y-this.y)/(double)(that.x-this.x);
     }
    
     //https://stackoverflow.com/questions/22499999/public-final-comparatorpoint-slope-order
     public Comparator<Point> slopeOrder()   {           // compare two points by slopes they make with this point
-     return new comp();   
-        
-    }
-        
-   
-    
-    private class comp implements Comparator<Point> {
-        @Override
+       return new Comparator<Point>() {
+    @Override
         public int compare(Point a, Point b){
             double slopea = slopeTo(a);
             double slopeb = slopeTo(b);
             return Double.compare(slopea, slopeb); 
         }
-        }        
+       };
+    }
+             
         public static void main(String[] args) {
         /* YOUR CODE HERE */
     }
