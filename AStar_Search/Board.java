@@ -1,6 +1,8 @@
 public class Board {
     private final int size; 
     private final int[][] board;
+    
+    
     public Board(int[][] blocks)   {        // construct a board from an n-by-n array of blocks
         // (where blocks[i][j] = block in row i, column j)
         size = blocks.length;
@@ -31,7 +33,7 @@ public class Board {
             //int distance = Math.abs(x1-x0) + Math.abs(y1-y0);
             x0 = (board[i][j]) / dimension();
             y0 = (board[i][j]) % dimentsion();
-            man + = Math.abs(i-x0) + Math.abs(i+y0);
+            man += Math.abs(i-x0) + Math.abs(i+y0);
             
         }
         return man;
@@ -83,12 +85,51 @@ public boolean equals(Object y) {       // does this board equal y?
     return this.toString().equals(that.toString());   
 }  
 
+private int[] findVal(int val){
+    int ij = {0,0};
+    boolean flag = false;
+    for(int i=0; i<dimension(); i++) 
+        for(int j=0; j<dimension()-1; j++){
+        if(board[i][j] ==val) {
+            
+         ij[0] = i;
+         ij[1] = j;
+         flag = true;
+         break;
+        }
+              
+    }
+    if(flag)
+        break; 
+}
+
+
 public Iterable<Board> neighbors(){     // all neighboring boards
  // To reduce unnecessary exploration of useless search nodes, when considering the
     //neighbors of a search node, don't enqueue a neighbor if its board is the same as the board of the previous search node.   
+    Stack<Board> boardStack = new Stack<Board>();
+    int[] ij = findVal(0);
+    Board b1 = new Board(board);
+    boolean neighbor = b1.swap(ij[0], ij[1], ij[0] -1, ij[1]);
+    if(neighbor)
+        boardStack.push(b1);
     
+    b1 = new Board(board);
+    boolean neighbor = b1.swap(ij[0], ij[1], ij[0], ij[1]-1);
+    if(neighbor)
+        boardStack.push(b1);
     
+    b1 = new Board(board);
+    boolean neighbor = b1.swap(ij[0], ij[1], ij[0]+1, ij[1]);
+    if(neighbor)
+        boardStack.push(b1);
     
+    b1 = new Board(board);
+    boolean neighbor = b1.swap(ij[0], ij[1], ij[0], ij[1]+1);
+    if(neighbor)
+        boardStack.push(b1);
+    
+    return b1;
     
 }
     public String toString()  {             // string representation of this board (in the output format specified below)
@@ -104,5 +145,7 @@ public Iterable<Board> neighbors(){     // all neighboring boards
     
     
 }
-public static void main(String[] args) // unit tests (not graded)
+    public static void main(String[] args){ // unit tests (not graded)
+        
+    }
     }
